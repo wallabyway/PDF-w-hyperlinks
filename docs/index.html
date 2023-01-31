@@ -1,0 +1,21 @@
+<head>
+	<title>global offset issue</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="data:,">
+	<script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
+	<script src="https://6jm6lvl74k.execute-api.us-west-2.amazonaws.com/latest/_adsk.js"></script>
+	<link href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" rel="stylesheet">
+</head>
+
+<body style="margin:0; overflow-y: hidden;">
+	<div id="panel">
+		<select id="folderList" onChange="startViewer(this.value)">
+			<option value="dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6b3NwYWNlLXRlc3QvUFJKMDM0LVpTRkctMzA3OS1DTS0xOS5ud2Q">bigNWD file</option>
+<option value="dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YXV0b2NhZC13ZXMvTUFOMDA1RjAyLmR3Zw">MAN005F02.dwg</option>
+<option value="dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YXV0b2NhZC13ZXMvUEFLMDIyRjAxLmR3Zw">PAK022F01.dwg</option>			
+			</select>
+	</div>
+	
+	<div id="Viewer"></div>
+</body>
