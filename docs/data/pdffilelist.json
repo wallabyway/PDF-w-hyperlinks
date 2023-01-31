@@ -1,0 +1,29 @@
+[
+        {
+            "groupName": "Floors",
+            "children": [
+                {
+                    "url": "pdfs/floor1.pdf",
+                    "name": "Level 1",
+                },
+                {
+                    "url": "pdfs/floor2.pdf",
+                    "name": "Level 2",
+                }
+			]
+        },
+        {
+            "groupName": "Parts",
+            "children": [
+                {
+                    "url": "pdfs/part1.pdf",
+                    "name": "Level 1",
+                },
+                {
+                    "url": "pdfs/part2.pdf",
+                    "name": "Level 2",
+                }
+			]
+        },
+
+]
