@@ -1,0 +1,51 @@
+{
+    "name": "Metal Container.iam",
+    "part": "ebox_example2",
+    "type": "3d",
+	"url": "urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c2YtYWNjZWwtMS9NZXRhbCUyMENvbnRhaW5lci5kd2Y",
+    "children": [
+        {
+            "name": "Metal Container Sheet 1",
+            "part": "ebox_example2",
+            "type": "2d",
+            "url": "Metal Container_Sheet_1.pdf",
+            "children": []
+        },
+        {
+            "name": "ebox.ipt",
+            "part": "CPL001grs",
+            "type": "3d",
+            "url": "",
+            "children": [
+                {
+                    "name": "ebox.idw",
+                    "part": "CPL001grs",
+                    "type": "2d",
+                    "url": "ebox_Sheet_1.pdf",
+                    "children": []
+                },
+                {
+                    "name": "ebox.idw",
+                    "part": "CPL001grs",
+                    "type": "2d",
+                    "url": "ebox_Sheet_2.pdf",
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "egasket.ipt",
+            "part": "egasket",
+            "type": "3d",
+            "url": "",
+            "children": []
+        },
+        {
+            "name": "elid.ipt",
+            "part": "elid",
+            "type": "3d",
+            "url": "",
+            "children": []
+        }
+    ]
+}

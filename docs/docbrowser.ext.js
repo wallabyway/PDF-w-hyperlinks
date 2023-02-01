@@ -14,8 +14,8 @@ export default class docBrowser extends AV.Extension {
 
 	addToolbarButton(viewer) {
 			// button to show the docking panel
-			var button = new AV.UI.Button('showPropertyInspectorPanel');
-			button.icon.classList.add("adsk-icon-properties");
+			var button = new AV.UI.Button('docBrowserPanel');
+			button.icon.classList.add("adsk-icon-structure");
 			button.container.style.color = "orange";
 			button.addClass('propertyInspectorToolbarButton');
 			button.setToolTip('Property Inspector Panel');
@@ -29,9 +29,15 @@ export default class docBrowser extends AV.Extension {
 				// if null, create it
 				if (this.panel == null) {
 					this.panel = new docBrowserPanel(viewer, viewer.container, 'DocBrowser', 'Document Browser');
-					JSON = {};
-					this.panel.loadData(JSON);
+					//JSON = {};
+					this.panel.loadData(viewer);
 				}
+				this.panel.container.style.left='5px';
+				this.panel.container.style.top='5px';
+				this.panel.container.style.height="400px";
+				this.panel.container.style.width="420px";
+				this.panel.container.dockRight=false;
+		
 				this.panel.setVisible(!this.panel.isVisible());
 			};			
 	}
@@ -47,11 +53,27 @@ class docBrowserPanel extends AV.UI.PropertyPanel {
         this.viewer = viewer;
     }
 
-	loadData() {
-		this.addProperty('Part', 'bracket', '3D-View');
-		this.addProperty('Part', 'fixture', '3D-View');
-		this.addProperty('Part', 'Bracket-45a.pdf', '2D-View');
-		this.addProperty('Part', 'Bracket-97b.pdf', '2D-View');
+	async loadData() {
+		const dataFolder = "data";	
+		const filelist = await (await fetch(`${dataFolder}/test.json`)).json();
+		this.addProperty('3D', filelist.url, '3D-VIEWS');
+		this.addProperty('PDF', `${dataFolder}/${filelist.children[0].url}`, '2D-VIEWS');
+		this.addProperty('PDF', `${dataFolder}/${filelist.children[1].children[0].url}`, '2D-VIEWS');
+		this.addProperty('PDF', `${dataFolder}/${filelist.children[1].children[1].url}`, '2D-VIEWS');
+	}
+
+	async onPropertyClick(property, e) {
+		if (property.value.indexOf('urn:')>=0) {
+			Autodesk.Viewing.Document.load(`${property.value}`, (doc) => {
+                var viewables = doc.getRoot().getDefaultGeometry();
+				this.viewer.loadDocumentNode(doc, viewables);
+			});
+		}
+
+		else {
+			await this.viewer.unloadModel();
+			this.viewer.loadModel(property.value, {keepCurrentModels:false});
+		}
 	}
 }
 
