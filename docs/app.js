@@ -5,7 +5,7 @@ import hyperlink from "./hyperlinkpdf.ext.js";
 const AV = Autodesk.Viewing;
 
 async function startViewer() {
-	AV.Initializer({ env: 'AutodeskProduction' }, async function () {
+	AV.Initializer({ env: 'AutodeskProduction', accessToken: _access_token, }, async function () {
 		const viewer = new Autodesk.Viewing.GuiViewer3D(
 			document.getElementById('Viewer'),
 			{ extensions: ["hyperlinksPdf", "docBrowser", "Autodesk.PDF"] }
