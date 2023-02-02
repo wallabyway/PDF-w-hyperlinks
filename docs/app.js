@@ -12,11 +12,7 @@ async function startViewer() {
 		);
 		viewer.start();
 		viewer.setTheme('light-theme');
-		viewer.loadExtension('Autodesk.PDF').then(() => {
-			viewer.loadModel(`data/ebox_Sheet_1.pdf`);
-		});
-
-
+		viewer.loadModel(`data/Metal Container_Sheet_1.pdf`);
 	});
 }	
 
