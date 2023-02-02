@@ -5,7 +5,7 @@ const HIGHLIGHT_COLOR = 0x1f00ff;
 const OVERLAY = 'bubbles-scene';
 
 ///////////////////////////////////////////////////////////////////
-// your extension code goes here.... 
+// load hyperlink extension 
  export default class hyperlinksPdf extends AV.Extension {
 	unload() { 
 		this.viewer.impl.removeOverlayScene( OVERLAY );
@@ -27,7 +27,8 @@ const OVERLAY = 'bubbles-scene';
 }
 AV.theExtensionManager.registerExtension("hyperlinksPdf", hyperlinksPdf);
 
-
+///////////////////////////////////////////////////////////////////
+// tool control for mouse events
 class hyperlinkTool extends Autodesk.Viewing.ToolInterface {
     constructor(viewer) {
         super();
