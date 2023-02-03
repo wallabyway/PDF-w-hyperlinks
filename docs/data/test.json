@@ -8,7 +8,7 @@
             "name": "Metal Container Sheet 1",
             "part": "ebox_example2",
             "type": "2d",
-            "url": "Metal Container_Sheet_1.pdf",
+            "url": "Metal Container.iam_Sheet_1.pdf",
             "children": []
         },
         {
@@ -21,14 +21,14 @@
                     "name": "ebox.idw",
                     "part": "CPL001grs",
                     "type": "2d",
-                    "url": "ebox_Sheet_1.pdf",
+                    "url": "ebox.idw_Sheet_1.pdf",
                     "children": []
                 },
                 {
                     "name": "ebox.idw",
                     "part": "CPL001grs",
                     "type": "2d",
-                    "url": "ebox_Sheet_2.pdf",
+                    "url": "ebox.idw_Sheet_1.pdf",
                     "children": []
                 }
             ]
