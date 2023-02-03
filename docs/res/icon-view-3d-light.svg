@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-view-3d</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="#858585" fill-rule="evenodd">
+        <g id="icon-view-3d">
+            <g id="guide" opacity="0" fill="#FF9898">
+                <rect id="Rectangle-4" x="0" y="0" width="24" height="24"></rect>
+            </g>
+            <path d="M12.5,5 L6.00480947,8.75 L6.00480947,16.25 L12.5,20 L18.9951905,16.25 L18.9951905,8.75 L12.5,5 Z M12.5,3.84529946 L19.9951905,8.17264973 L19.9951905,16.8273503 L12.5,21.1547005 L5.00480947,16.8273503 L5.00480947,8.17264973 L12.5,3.84529946 Z" id="Polygon" fill="#858585" fill-rule="nonzero"></path>
+            <polygon id="Line" fill="#858585" fill-rule="nonzero" points="12 12 12 20.0588235 13 20.0588235 13 12"></polygon>
+            <polygon id="Line" fill="#858585" fill-rule="nonzero" points="5.64133837 9.15664034 12.6860521 13.182191 13.182191 12.3139479 6.13747731 8.2883972"></polygon>
+            <polygon id="Line" fill="#858585" fill-rule="nonzero" points="18.8625227 8.2883972 11.817809 12.3139479 12.3139479 13.182191 19.3586616 9.15664034"></polygon>
+        </g>
+    </g>
+</svg>

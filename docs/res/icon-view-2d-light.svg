@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-view-2d</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="#858585" fill-rule="evenodd">
+        <g id="icon-view-2d">
+            <g id="guide" opacity="0" fill="#FF9898">
+                <rect id="Rectangle-4" x="0" y="0" width="24" height="24"></rect>
+            </g>
+            <path d="M13,15 L13,12 L16,12 L16,11 L17,11 L17,12.5 L17,16 L13.5,16 L12,16 L12,15 L13,15 Z" id="Combined-Shape" fill="#858585"></path>
+            <rect id="Rectangle-10-Copy-22" fill="#858585" x="16" y="8" width="1" height="2"></rect>
+            <path d="M4,16 L4,18 L20,18 L20,6 L17,6 L17,7 L16,7 L16,6 L4,6 L4,15 L5,15 L5,16 L4,16 Z M20.5,5 L21,5 L21,19 L20.5,19 L3,19 L3,18.5 L3,5.5 L3,5 L20.5,5 Z" id="Combined-Shape" fill="#858585"></path>
+            <rect id="Rectangle-10-Copy-26" fill="#858585" x="16" y="14" width="1" height="2"></rect>
+            <rect id="Rectangle-10-Copy-27" fill="#858585" transform="translate(7.000000, 15.500000) rotate(-270.000000) translate(-7.000000, -15.500000) " x="6.5" y="14.5" width="1" height="2"></rect>
+            <rect id="Rectangle-10-Copy-28" fill="#858585" transform="translate(10.000000, 15.500000) rotate(-270.000000) translate(-10.000000, -15.500000) " x="9.5" y="14.5" width="1" height="2"></rect>
+            <rect id="Rectangle-10-Copy-30" fill="#858585" transform="translate(16.000000, 15.500000) rotate(-270.000000) translate(-16.000000, -15.500000) " x="15.5" y="14.5" width="1" height="2"></rect>
+        </g>
+    </g>
+</svg>
