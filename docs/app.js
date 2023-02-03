@@ -12,7 +12,7 @@ async function startViewer() {
 		);
 		viewer.start();
 		viewer.setTheme('light-theme');
-		viewer.loadModel(`data/Metal Container_Sheet_1.pdf`);
+		viewer.loadModel(`data/Metal Container.idw_Sheet_1.pdf`);
 	});
 }	
 
