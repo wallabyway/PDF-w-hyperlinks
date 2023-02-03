@@ -78,7 +78,7 @@ class CMenuExtension extends Autodesk.Viewing.UI.ObjectContextMenu {
 			this.viewer.loadModel(`${dataFolder}/${part.url}`, {keepCurrentModels:false});
 			await this.viewer.waitForLoadDone();
 			this.viewer.search(part.name, (results)=>{
-				viewer.isolate(results);
+				this.viewer.isolate(results);
 				this.viewer.fitToView(presults);
 			}, null, ['Part Number']);
 			
