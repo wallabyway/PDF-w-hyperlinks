@@ -7,25 +7,34 @@ const HIGHLIGHT_OFF = 0.01;
 const HIGHLIGHT_COLOR = 0x1f00ff;
 const OVERLAY = 'bubbles-scene';
 const BUBBLE_RADIUS = 0.18;
+const dataFolder = "data";	
 
 ///////////////////////////////////////////////////////////////////
 // load hyperlink extension 
  export default class hyperlinksPdf extends AV.Extension {
 	unload() { 
 		this.viewer.impl.removeOverlayScene( OVERLAY );
+		this.viewer.toolController.unregisterTool(this.tool);
+		this.tool = null;
 		return true;
 	}
 
 	async load() { 
 		await this.viewer.waitForLoadDone();
-
+		
 		// load bubble module
 		if (!this.viewer.overlays.hasScene(OVERLAY)) {
 			this.viewer.overlays.addScene(OVERLAY);
 		}
-		this.tool = new hyperlinkTool(this.viewer);
-		this.viewer.toolController.registerTool(this.tool);
-		this.viewer.toolController.activateTool(OVERLAY);
+		if (!this.tool) { 
+			// load custom context menu module
+			this.menu = new CMenuExtension(this.viewer);
+			//this.viewer.setContextMenu(this.menu);		
+
+			this.tool = new hyperlinkTool(this.viewer, this.menu);
+			this.viewer.toolController.registerTool(this.tool);
+			this.viewer.toolController.activateTool(OVERLAY);
+		}
 
 		console.log('hyperlinksPdf...loaded');
 		return true;
@@ -43,35 +52,39 @@ class CMenuExtension extends Autodesk.Viewing.UI.ObjectContextMenu {
 
 	buildMenu(event, node) {
 		var menu = [];
-		this.name = "lalala";
-		this.dbid = 123;
-		menu.push({
-			title: `open part ${event.partID}`,
-			className: 'navbar',
-			target: (e) => this.launchView(event)
-		}, {
-			title: `Hide 123 ${event.url}`,
-			className: 'navbar disabled',
-			target: (e) => viewer.hide(event.partID)
+		if (!event.partObj) return menu;
+		event.partObj.map( part => {
+			menu.push({
+				title: `Open ${part.type} Part "${part.name}"`,
+				className: 'navbar',
+				target: (e) => this.launchView(part)
+			})
 		});
 		return menu;
 	}
 
-	launchView(event) {
-		AV.Document.load(`${event.url}`, async (doc) => {
-			var viewables = doc.getRoot().getDefaultGeometry();
-			this.viewer.loadDocumentNode(doc, viewables);
-			await this.viewer.waitForLoadDone();
-			this.viewer.isolate(event.partID);
-			this.viewer.fitToView(event.partID);
-		});
+	async launchView(part) {
+		console.log(part.type);
+		if (part.type=="3d")
+			AV.Document.load(`urn:${part.urn}`, async (doc) => {
+				var viewables = doc.getRoot().getDefaultGeometry();
+				this.viewer.loadDocumentNode(doc, viewables);
+				await this.viewer.waitForLoadDone();
+				this.viewer.isolate(part.dbid);
+				this.viewer.fitToView(part.dbid);
+			});
+		else {
+			// load PDF
+			await this.viewer.unloadModel();
+			this.viewer.loadModel(`${dataFolder}/${part.url}`, {keepCurrentModels:false});
+		}
 	}
 }
 
 ///////////////////////////////////////////////////////////////////
 // Add Hyperlinks to Canvas.  Bubbles are made of 3js circle geometry. Hit test via a ToolInterface mouse events
 class hyperlinkTool extends Autodesk.Viewing.ToolInterface {
-    constructor(viewer) {
+    constructor(viewer, menu) {
         super();
 		delete this.register;
         delete this.getPriority;
@@ -79,17 +92,17 @@ class hyperlinkTool extends Autodesk.Viewing.ToolInterface {
         delete this.handleSingleClick;
 		this.names = [OVERLAY];
 		this.viewer = viewer;
+		this.menu = menu;
 		this.layer = this.viewer.overlays.impl.overlayScenes[OVERLAY];
-
-		// load custom context menu module
-		this.menu = new CMenuExtension(this.viewer);//new Autodesk.Viewing.UI.ObjectContextMenu(this.viewer);
-		this.viewer.setContextMenu(this.menu);		
 	}
 
 	register() {
-		this.addBubble(10, "urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c2YtYWNjZWwtMS9NZXRhbCUyMENvbnRhaW5lci5kd2Y", 9.312, 14.85);
-		this.addBubble("level2123", "another.pdf",  9.4414, 12.926);
-		this.addBubble("level1456", "another1.pdf",  9.47, 11.4);
+		this.addBubble(9.312, 14.85, [
+			{ type:"3d", name:"CPL001grs", dbid:10, urn:"dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c2YtYWNjZWwtMS9NZXRhbCUyMENvbnRhaW5lci5kd2Y"},
+			{ type:"2d", name:"part44", url:"ebox_Sheet_1.pdf"}
+		]);
+		this.addBubble(9.441, 12.93, [{ type:"2d", name:"pdf-part45", url:"ebox_Sheet_2.pdf"}]);
+		this.addBubble(9.471, 11.41, [{ type:"2d", name:"pdf-part46", url:"ebox_Sheet_1.pdf"}]);
     }
 
     getPriority() {
@@ -99,9 +112,7 @@ class hyperlinkTool extends Autodesk.Viewing.ToolInterface {
 	handleSingleClick(event) {
 		const intersects = this.intersect(event, this.layer.scene.children);
 		if (intersects[0]) {
-			console.log(intersects[0].partID);
-			event.partID = intersects[0].partID;
-			event.url = intersects[0].url;
+			event.partObj = intersects[0].partObj;
 			this.menu.show(event);
 		}
         return false;
@@ -130,14 +141,13 @@ class hyperlinkTool extends Autodesk.Viewing.ToolInterface {
 		this.viewer.impl.invalidate(true);
 	}
 
-	addBubble(partID, url, x, y) {
+	addBubble(x, y, partObj) {
 		const geom = new THREE.CircleGeometry( BUBBLE_RADIUS, 32 );
 		const material = new THREE.MeshBasicMaterial({ color: HIGHLIGHT_COLOR });
 		material.opacity=HIGHLIGHT_OFF;
 		const sphereMesh = new THREE.Mesh(geom, material);
 		sphereMesh.position.set(x, y, 0);
-		sphereMesh.partID = partID;
-		sphereMesh.url = url;
+		sphereMesh.partObj = partObj;
 		this.viewer.overlays.addMesh(sphereMesh, OVERLAY);
 	}
 
