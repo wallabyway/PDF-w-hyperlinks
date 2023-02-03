@@ -9,8 +9,7 @@ const MY_FOLDER_DATA = {
             name: 'Documents',
             entries: [
                 {
-                    path: '/home/docs/drawing1.pdf',
-                    name: 'drawing1.pdf',
+                    name: 'Metal Container.idw_Sheet_1.pdf',
 					type: '2d'
                 }
             ]
@@ -20,22 +19,19 @@ const MY_FOLDER_DATA = {
             name: 'Images',
             entries: [
                 {
-                    path: '/home/images/image1.png',
-					type: '3d',
-                    name: 'image1.png'
+					type: '2d',
+                    name: 'ebox.idw_Sheet_1.pdf'
                 },
                 {
                     path: '/home/images/old',
                     name: 'Old',
                     entries: [
                         {
-                            path: '/home/images/old/image1.png',
-                            name: 'image1.png',
+                            name: 'Metal Container.iam.dwfx',
 							type: '3d'
                         },
                         {
-                            path: '/home/images/old/image2.png',
-                            name: 'image2.pdf',
+                            name: 'ebox.idw_Sheet_1.pdf',
 							type: '2d'
                         }                        
                     ]
