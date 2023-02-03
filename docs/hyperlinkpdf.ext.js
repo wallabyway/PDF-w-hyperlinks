@@ -98,7 +98,7 @@ class hyperlinkTool extends Autodesk.Viewing.ToolInterface {
 
 	register() {
 		this.addBubble(9.312, 14.85, [
-			{ type:"3d", name:"CPL001grs", dbid:10, urn:"dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c2YtYWNjZWwtMS9NZXRhbCUyMENvbnRhaW5lci5kd2Y"},
+			{ type:"3d", name:"CPL001grs", dbid:10, urn:"Metal Container.idw_Sheet_1.pdf"},
 			{ type:"2d", name:"part44", url:"ebox.idw_Sheet_1.pdf"}
 		]);
 		
