@@ -65,15 +65,24 @@ class CMenuExtension extends Autodesk.Viewing.UI.ObjectContextMenu {
 
 	async launchView(part) {
 		console.log(part.type);
-		if (part.type=="3d")
-			AV.Document.load(`urn:${part.urn}`, async (doc) => {
-				var viewables = doc.getRoot().getDefaultGeometry();
-				this.viewer.loadDocumentNode(doc, viewables);
-				await this.viewer.waitForLoadDone();
-				this.viewer.isolate(part.dbid);
-				this.viewer.fitToView(part.dbid);
-			});
-		else {
+		if (part.type=="3d") {
+			// AV.Document.load(`urn:${part.urn}`, async (doc) => {
+			// 	var viewables = doc.getRoot().getDefaultGeometry();
+			// 	this.viewer.loadDocumentNode(doc, viewables);
+			// 	await this.viewer.waitForLoadDone();
+			// 	this.viewer.isolate(part.dbid);
+			// 	this.viewer.fitToView(part.dbid);
+			// });
+
+			await this.viewer.unloadModel();
+			this.viewer.loadModel(`${dataFolder}/${part.url}`, {keepCurrentModels:false});
+			await this.viewer.waitForLoadDone();
+			viewer.search(part.name, (results)=>{
+				viewer.isolate(results);
+				this.viewer.fitToView(presults);
+			}, null, ['Part Number']);
+			
+		} else {
 			// load PDF
 			await this.viewer.unloadModel();
 			this.viewer.loadModel(`${dataFolder}/${part.url}`, {keepCurrentModels:false});
@@ -98,11 +107,11 @@ class hyperlinkTool extends Autodesk.Viewing.ToolInterface {
 
 	register() {
 		this.addBubble(9.312, 14.85, [
-			{ type:"3d", name:"CPL001grs", dbid:10, urn:"Metal Container.idw_Sheet_1.pdf"},
-			{ type:"2d", name:"part44", url:"ebox.idw_Sheet_1.pdf"}
+			{ type:"3d", name:"CPL001grs", urn:"Metal Container.idw_Sheet_1.pdf"},
+			{ type:"2d", name:"ebox", url:"ebox.idw_Sheet_1.pdf"}
 		]);
 		
-		this.addBubble(9.471, 11.41, [{ type:"2d", name:"pdf-part46", url:"ebox.idw_Sheet_1.pdf"}]);
+		this.addBubble(9.471, 11.41, [{ type:"2d", name:"ebox", url:"ebox.idw_Sheet_1.pdf"}]);
     }
 
     getPriority() {
