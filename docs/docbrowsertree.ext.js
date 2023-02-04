@@ -65,15 +65,17 @@ class CustomTreeDelegate extends Autodesk.Viewing.UI.TreeDelegate {
     }
 
     onTreeNodeClick(tree, node, event) {
-        console.log('click', tree, node, event);
+		const filename = event.target.children[2].textContent;
+		window.location=`/?url=${filename}`;
+        //console.log('click', tree, node, event);
     }
 
     onTreeNodeDoubleClick(tree, node, event) {
-        console.log('double-click', tree, node, event);
+        //console.log('double-click', tree, node, event);
     }
 
     onTreeNodeRightClick(tree, node, event) {
-        console.log('right-click', tree, node, event);
+        //console.log('right-click', tree, node, event);
     }
 
     createTreeNode(node, parent, options, type, depth) {
