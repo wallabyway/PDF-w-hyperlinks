@@ -64,29 +64,8 @@ class CMenuExtension extends Autodesk.Viewing.UI.ObjectContextMenu {
 	}
 
 	async launchView(part) {
-		console.log(part.type);
-		if (part.type=="3d") {
-			// AV.Document.load(`urn:${part.urn}`, async (doc) => {
-			// 	var viewables = doc.getRoot().getDefaultGeometry();
-			// 	this.viewer.loadDocumentNode(doc, viewables);
-			// 	await this.viewer.waitForLoadDone();
-			// 	this.viewer.isolate(part.dbid);
-			// 	this.viewer.fitToView(part.dbid);
-			// });
-
-			await this.viewer.unloadModel();
-			this.viewer.loadModel(`${dataFolder}/${part.url}`, {keepCurrentModels:false});
-			await this.viewer.waitForLoadDone();
-			this.viewer.search(part.name, (results)=>{
-				this.viewer.isolate(results);
-				this.viewer.fitToView(results);
-			}, null, ['Part Number']);
-			
-		} else {
-			// load PDF
-			await this.viewer.unloadModel();
-			this.viewer.loadModel(`${dataFolder}/${part.url}`, {keepCurrentModels:false});
-		}
+		const partname = (part.name) ? `&partname=${part.name}` : "";
+		window.location = `?url=${part.url}${partname}`;
 	}
 }
 
