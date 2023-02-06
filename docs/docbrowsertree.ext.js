@@ -1,43 +1,34 @@
 const AV = Autodesk.Viewing;
 
 const MY_FOLDER_DATA = {
-    path: '/home',
-    name: 'Home',
+    name: 'Assembly Tree',
     entries: [
-        {
-            path: '/home/docs',
-            name: 'Documents',
-            entries: [
+		{
+			name: 'Metal Container.iam.dwfx',
+			part: "ebox_example2",
+			type: '3d',
+			entries: [
+				{
+					"name": "Metal Container.idw_Sheet_1.pdf",
+					"type": "2d",
+				},
+				{
+					"name": "Metal Container.dwg_Sheet_1.pdf",
+					"type": "2d",
+				},
+			],
+		},
+		{
+			name: 'ebox.ipt',
+			part: "CPL001grs",
+			type: '3d',
+			entries: [
                 {
-                    name: 'Metal Container.idw_Sheet_1.pdf',
-					type: '2d'
+                    "name": "ebox.idw_Sheet_1.pdf",
+                    "type": "2d"
                 }
-            ]
-        },
-        {
-            path: '/home/images',
-            name: 'Images',
-            entries: [
-                {
-					type: '2d',
-                    name: 'ebox.idw_Sheet_1.pdf'
-                },
-                {
-                    path: '/home/images/old',
-                    name: 'Old',
-                    entries: [
-                        {
-                            name: 'Metal Container.iam.dwfx',
-							type: '3d'
-                        },
-                        {
-                            name: 'ebox.idw_Sheet_1.pdf',
-							type: '2d'
-                        }                        
-                    ]
-                }
-            ]
-        }
+            ]			
+		}
     ]
 };
 
@@ -66,7 +57,7 @@ class CustomTreeDelegate extends Autodesk.Viewing.UI.TreeDelegate {
 
     onTreeNodeClick(tree, node, event) {
 		const filename = event.target.children[2].textContent;
-		window.location=`/?url=${filename}`;
+		window.location=`?url=${filename}`;
         //console.log('click', tree, node, event);
     }
 
@@ -120,20 +111,42 @@ export class CustomTreeViewPanel extends Autodesk.Viewing.UI.DockingPanel {
     }
 }
 
-export default class docBrowser2 extends AV.Extension {
+
+
+///////////////////////////////////////////////////////////////////
+// Toolbar Button
+export default class docBrowserTree extends AV.Extension {
 	unload() { return true }
 	async load() {
+		console.log('docBrowser...loaded'); 
+		// add toolbar
 		await this.viewer.waitForLoadDone();
-		const nn = new CustomTreeViewPanel(this.viewer, "doc Browser", "doc Browser");
-		nn.container.style.left='5px';
-		nn.container.style.top='5px';
-		nn.container.style.height="400px";
-		nn.container.style.width="220px";
-		nn.container.dockRight=false;
-
-		nn.setVisible(true);
+		this.addToolbarButton(this.viewer);
 		return true;
 	}
-}
 
-AV.theExtensionManager.registerExtension("docBrowser2", docBrowser2);
+	addToolbarButton(viewer) {
+			// add Toolbar button
+			var button = new AV.UI.Button('docBrowserPanel');
+			button.icon.classList.add("docbrowser_icon");
+			button.setToolTip('Document Browser');
+			button.onClick = function (e) {	
+				this.panel.setVisible(!this.panel.isVisible());
+			}.bind(this);			
+			this.subToolbar = new AV.UI.ControlGroup('docBrowserToolbar');
+			this.subToolbar.addControl(button);
+			viewer.toolbar.addControl(this.subToolbar);
+
+			// connect to popup Dialog
+			this.panel = new CustomTreeViewPanel(viewer, viewer.container, 'Document Browser', 'Document Browser');
+			this.panel.container.style.left='5px';
+			this.panel.container.style.top='5px';
+			this.panel.container.style.height="390px";
+			this.panel.container.style.width="320px";
+			this.panel.container.dockRight=false;
+			this.panel.setVisible(true);
+
+	}
+}
+AV.theExtensionManager.registerExtension("docBrowserTree", docBrowserTree);
+

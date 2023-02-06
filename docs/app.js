@@ -1,16 +1,16 @@
-import docbrowser from "./docbrowser.ext.js";
 import hyperlink from "./hyperlinkpdf.ext.js";
-import docbrowser2 from "./docbrowsertree.ext.js";
+import docbrowser from "./docbrowsertree.ext.js";
 
 
 const AV = Autodesk.Viewing;
 const dataFolder = "data";	
+let viewer = null;
 
 async function startViewer() {
 	AV.Initializer({ env: 'AutodeskProduction', accessToken: "1231" }, async function () {
-		const viewer = new Autodesk.Viewing.GuiViewer3D(
+		viewer = new Autodesk.Viewing.GuiViewer3D(
 			document.getElementById('Viewer'),
-			{ extensions: ["docBrowser2","Autodesk.Vault.Markups", "hyperlinksPdf", "docBrowser", "Autodesk.PDF", "Autodesk.DWF"] }
+			{ extensions: ["Autodesk.Vault.Markups", "hyperlinksPdf", "docBrowserTree", "Autodesk.PDF", "Autodesk.DWF"] }
 		);
 		viewer.start();
 		viewer.setTheme('light-theme');
@@ -23,8 +23,8 @@ async function startViewer() {
 		}
 		await viewer.unloadModel();
 		viewer.loadModel(filename, {keepCurrentModels:false});
+		await viewer.waitForLoadDone();
 		if (params.partname) {
-			await viewer.waitForLoadDone();
 			viewer.search(params.partname, (results)=>{
 				viewer.isolate(results);
 				viewer.fitToView(results);
@@ -35,3 +35,9 @@ async function startViewer() {
 }	
 
 startViewer();
+
+window.saveMarkups = async () => {
+	const ext = await viewer.loadExtension("Autodesk.Vault.Markups");
+	console.log(ext.markupLayers);
+}		
+
